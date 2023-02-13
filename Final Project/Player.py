@@ -1,5 +1,5 @@
 import pygame
-player_speed = 2
+from settings import *
 
 class Player(pygame.sprite.Sprite):
     def __init__(self,size,pos):
@@ -29,7 +29,20 @@ class Player(pygame.sprite.Sprite):
         else:
             self.y_direction = 0
 
+    def boundary_check(self):
+        # Border Check
+        if self.rect.x > screen_width - block_width:
+            self.rect.x = screen_width - block_width
+        elif self.rect.x < 0:
+            self.rect.x = 0
+        
+        if self.rect.y < 0:
+            self.rect.y = 0
+        elif self.rect.y > screen_height - block_height:
+            self.rect.y = screen_height - block_height
+
     def update(self):
         self.get_input()
         self.rect.y += self.y_direction
         self.rect.x += self.x_direction
+        self.boundary_check()
